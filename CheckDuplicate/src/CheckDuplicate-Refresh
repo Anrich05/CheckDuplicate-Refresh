@@ -1,0 +1,69 @@
+package checkduplicate;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Scanner;
+
+/**
+ *
+ * @author Anrich
+ */
+public class CheckDuplicate {
+
+    static int index = -1;
+    static final int numofchars = 256; // max num of ASCII
+    static char count[] = new char[numofchars]; //count number of occurence of character
+
+    public static void main(String[] args) {
+        StartingMessage();
+        Scanner input = new Scanner(System.in);
+        String str = input.nextLine();
+        str = str.toLowerCase();
+        index = firstnonrepeatchar(str);
+        if (index == -1){
+           RepeatingMessage();
+        }else{
+            NonRepeatingMessage(str,index);
+        }
+    }
+
+    public static void StartingMessage(){
+        System.out.println("Please write a string value to check which character is the first one that is not repeating");
+    }
+
+    /*This function returns the index of the first character that is not
+    being repeated in the string. If there is none, the function returns -1 */
+    static int firstnonrepeatchar(String str){
+        getPosistionOfChar(str);
+        int i;
+        index = -1;
+        for ( i = 0; i < str.length(); i++) {
+            if (count[str.charAt(i)] == 1) {
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
+
+    //Calculates the count of characters in the passed string
+    static void getPosistionOfChar(@NotNull String str){
+        for (int i = 0; i < str.length(); i++) {
+            count[str.charAt(i)]++;
+        }
+    }
+
+    //Method runs when there is no character that is unique in the string
+    public static void RepeatingMessage(){
+        System.out.println("Either all characters are repeating or string "
+                + "is empty");
+    }
+
+    //Method runs when there is a character that is unique in the string
+    public static void NonRepeatingMessage(@org.jetbrains.annotations.NotNull String character, int position){
+        System.out.println("First chatacter that is not repeating is "
+                + character.charAt(position));
+    }
+
+    
+}
